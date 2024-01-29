@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BaptismHistoryResourceIT {
+class BaptismHistoryResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -23,8 +23,7 @@ public class BaptismHistoryResourceIT {
                 LocalDate.of(2022, 2, 22),
                 LocalDate.of(2022, 2, 22),
                 "Midrand",
-                "Midrand",
-                2L);
+                "Midrand");
 
         BaptismHistory expectedBook = webTestClient
                 .post()
@@ -44,8 +43,7 @@ public class BaptismHistoryResourceIT {
                 LocalDate.of(2022, 2, 22),
                 LocalDate.of(2022, 2, 22),
                 "Midrand",
-                "Midrand",
-                2L);
+                "Midrand");
 
         BaptismHistory createdBaptismHistory = webTestClient
                 .post()
@@ -57,14 +55,13 @@ public class BaptismHistoryResourceIT {
                 .returnResult().getResponseBody();
 
         var baptismHistoryUpdate = new BaptismHistory(
-                createdBaptismHistory.id(),
-                createdBaptismHistory.parishName(),
-                createdBaptismHistory.baptismDate(),
-                createdBaptismHistory.confirmedDate(),
-                createdBaptismHistory.parishBaptisedAt(),
+                createdBaptismHistory.getId(),
+                createdBaptismHistory.getParishName(),
+                createdBaptismHistory.getBaptismDate(),
+                createdBaptismHistory.getConfirmedDate(),
                 "Midrand Parish",
-                createdBaptismHistory.userId(),
-                createdBaptismHistory.version()
+                createdBaptismHistory.getParishConfirmedAt(),
+                createdBaptismHistory.getVersion()
         );
 
         webTestClient
@@ -75,7 +72,7 @@ public class BaptismHistoryResourceIT {
                 .expectStatus().isOk()
                 .expectBody(BaptismHistory.class).value(history -> {
                    assertThat(history).isNotNull();
-                   assertThat(history.parishConfirmedAt()).isEqualTo(baptismHistoryUpdate.parishConfirmedAt());
+                   assertThat(history.getParishConfirmedAt()).isEqualTo(baptismHistoryUpdate.getParishConfirmedAt());
                 });
     }
 
@@ -87,8 +84,7 @@ public class BaptismHistoryResourceIT {
                 LocalDate.of(2022, 2, 22),
                 LocalDate.of(2022, 2, 22),
                 "Midrand",
-                "Midrand",
-                2L);
+                "Midrand");
 
         BaptismHistory createdBaptismHistory = webTestClient
                 .post()
@@ -101,13 +97,13 @@ public class BaptismHistoryResourceIT {
 
         webTestClient
                 .delete()
-                .uri("/api/v1.0/baptism-histories/" + createdBaptismHistory.id())
+                .uri("/api/v1.0/baptism-histories/" + createdBaptismHistory.getId())
                 .exchange()
                 .expectStatus().isNoContent();
 
         webTestClient
                 .get()
-                .uri("/api/v1.0/baptism-histories/" + createdBaptismHistory.id())
+                .uri("/api/v1.0/baptism-histories/" + createdBaptismHistory.getId())
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody(String.class).value(errorMessage -> {

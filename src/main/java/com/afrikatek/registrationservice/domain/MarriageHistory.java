@@ -9,23 +9,30 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "marriage_history")
-public record MarriageHistory(
+public class MarriageHistory {
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Long id,
+        Long id;
         @NotNull(message = "Marriage date can not be null")
         @Column(nullable = false)
         @Past
-        LocalDate marriageDate,
+        LocalDate marriageDate;
         @NotBlank(message = "Parish married at can not be blank.")
         @Column(nullable = false)
-        String parishMarriedAt,
+        String parishMarriedAt;
         @Column(nullable = false)
         @NotBlank(message = "Spousal full name can not be blank.")
-        String spouseFullNames
-) {
+        String spouseFullNames;
 }

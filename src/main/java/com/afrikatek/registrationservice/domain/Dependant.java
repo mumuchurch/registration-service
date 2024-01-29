@@ -1,28 +1,35 @@
 package com.afrikatek.registrationservice.domain;
 
 import com.afrikatek.registrationservice.domain.enumeration.Gender;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "dependants")
-public record Dependant(
+public class Dependant {
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Long id,
+        private Long id;
         @NotBlank(message = "Full names can not be blank.")
-        @Column(nullable = false)
-        String fullNames,
-        @Column(nullable = false)
+        private String fullNames;
         @NotNull(message = "Date of birth can not be null.")
-        LocalDate dateOfBirth,
-        Gender gender
-) {
+        private LocalDate dateOfBirth;
+        @Enumerated(EnumType.STRING)
+        private Gender gender;
 }

@@ -1,43 +1,47 @@
 package com.afrikatek.registrationservice.domain;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Data
+@Entity
+@Table(name = "baptism_history")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class BaptismHistory {
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        @NotNull
+        private String parishName;
+        @NotNull
+        private LocalDate baptismDate;
+        @NotNull
+        private LocalDate confirmedDate;
+        @NotNull
+        private String parishBaptisedAt;
+        @NotNull
+        private String parishConfirmedAt;
 
-public record BaptismHistory(
-        @Id
-        Long id,
-        @NotNull
-        @Column(name = "parish_name", nullable = false)
-        String parishName,
-        @NotNull
-        @Column(name = "baptism_date", nullable = false)
-        LocalDate baptismDate,
-        @NotNull
-        @Column(name = "confirmed_date", nullable = false)
-        LocalDate confirmedDate,
-        @NotNull
-        @Column(name = "parish_baptised_at", nullable = false)
-        String parishBaptisedAt,
-        @NotNull
-        @Column(name = "parish_confirmed_at", nullable = false)
-        String parishConfirmedAt,
-        @NotNull
-        @Column(name = "user_id", nullable = false)
-        Long userId,
         @Version
-        int version
-) {
+        private int version;
         public static BaptismHistory of(
                 String parishName,
                 LocalDate baptismDate,
                 LocalDate confirmedDate,
                 String parishBaptisedAt,
-                String parishConfirmedAt,
-                Long userId
+                String parishConfirmedAt
         ) {
                 return new BaptismHistory(
                         null,
@@ -46,7 +50,6 @@ public record BaptismHistory(
                         confirmedDate,
                         parishBaptisedAt,
                         parishConfirmedAt,
-                        userId,
                         0);
         }
 }

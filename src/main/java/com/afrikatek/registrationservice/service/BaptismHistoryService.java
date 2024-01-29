@@ -25,8 +25,8 @@ public class BaptismHistoryService {
     }
 
     public BaptismHistory updateBaptismHistory(BaptismHistory baptismHistory) {
-        baptismHistoryRepository.findById(baptismHistory.id())
-                .orElseThrow(() -> new EntityNotFoundException(baptismHistory.id(), "BaptismHistory"));
+        baptismHistoryRepository.findById(baptismHistory.getId())
+                .orElseThrow(() -> new EntityNotFoundException(baptismHistory.getId(), "BaptismHistory"));
         return baptismHistoryRepository.save(baptismHistory);
     }
 
