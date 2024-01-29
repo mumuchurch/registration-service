@@ -24,15 +24,15 @@ import java.time.LocalDate;
 @Table(name = "marriage_history")
 public class MarriageHistory {
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Long id;
+        private Long id;
         @NotNull(message = "Marriage date can not be null")
         @Column(nullable = false)
         @Past
-        LocalDate marriageDate;
+        private LocalDate marriageDate;
         @NotBlank(message = "Parish married at can not be blank.")
         @Column(nullable = false)
-        String parishMarriedAt;
+        private String parishMarriedAt;
         @Column(nullable = false)
         @NotBlank(message = "Spousal full name can not be blank.")
-        String spouseFullNames;
+        private String spouseFullNames;
 }

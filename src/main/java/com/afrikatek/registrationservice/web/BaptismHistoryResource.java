@@ -21,7 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1.0/baptism-histories")
 @AllArgsConstructor
-@Slf4j
 public class BaptismHistoryResource {
     private final BaptismHistoryRepository baptismHistoryRepository;
     private final BaptismHistoryService baptismHistoryService;

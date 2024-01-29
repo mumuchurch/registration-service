@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1.0/dependants")
-@Slf4j
 public class DependantResource {
     private final DependantRepository dependantRepository;
 

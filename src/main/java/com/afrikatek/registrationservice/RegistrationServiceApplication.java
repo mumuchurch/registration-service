@@ -2,8 +2,10 @@ package com.afrikatek.registrationservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class RegistrationServiceApplication {
 
     public static void main(String[] args) {

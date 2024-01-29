@@ -4,6 +4,7 @@ import com.afrikatek.registrationservice.domain.BaptismHistory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("integration")
 class BaptismHistoryResourceIT {
 
     @Autowired
@@ -69,7 +71,7 @@ class BaptismHistoryResourceIT {
                 .uri("/api/v1.0/baptism-histories")
                 .bodyValue(baptismHistoryUpdate)
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().isAccepted()
                 .expectBody(BaptismHistory.class).value(history -> {
                    assertThat(history).isNotNull();
                    assertThat(history.getParishConfirmedAt()).isEqualTo(baptismHistoryUpdate.getParishConfirmedAt());
@@ -107,7 +109,7 @@ class BaptismHistoryResourceIT {
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody(String.class).value(errorMessage -> {
-                   assertThat(errorMessage).isEqualTo("The BaptismHistory could not be found.");
+                   assertThat(errorMessage).isEqualTo("The BaptismHistory with id 3 could not be found.");
                 });
     }
 }

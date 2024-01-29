@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1.0/marriage-histories")
 @AllArgsConstructor
-@Slf4j
 public class MarriageHistoryResource {
     private final MarriageHistoryRepository marriageHistoryRepository;
 
