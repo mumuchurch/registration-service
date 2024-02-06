@@ -1,55 +1,42 @@
 package com.afrikatek.registrationservice.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Version;
+
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.Version;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
+
 @Data
-@Entity
-@Table(name = "baptism_history")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class BaptismHistory {
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-        @NotNull
-        private String parishName;
-        @NotNull
-        private LocalDate baptismDate;
-        @NotNull
-        private LocalDate confirmedDate;
-        @NotNull
-        private String parishBaptisedAt;
-        @NotNull
-        private String parishConfirmedAt;
-
-        @Version
-        private int version;
-        public static BaptismHistory of(
-                String parishName,
-                LocalDate baptismDate,
-                LocalDate confirmedDate,
-                String parishBaptisedAt,
-                String parishConfirmedAt
-        ) {
-                return new BaptismHistory(
-                        null,
-                        parishName,
-                        baptismDate,
-                        confirmedDate,
-                        parishBaptisedAt,
-                        parishConfirmedAt,
-                        0);
-        }
+    @NotNull(message = "Parish name should be defined.")
+    String parishName;
+    @NotNull(message = "Baptism date should be defined.")
+    LocalDate baptismDate;
+    @NotNull(message = "Confirmed date should be defined.")
+    LocalDate confirmedDate;
+    @NotBlank(message = "The parish you are baptised at should be defined.")
+    String parishBaptisedAt;
+    @NotBlank(message = "The parish you were confirmed at should be defined.")
+    String parishConfirmedAt;
+    @CreatedDate
+    Instant createdDate;
+    @LastModifiedDate
+    Instant lastModifiedDate;
+    @Version
+    int version;
+    @Transient
+    Congregant congregant;
 }

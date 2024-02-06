@@ -24,8 +24,8 @@ public class DependantResource {
     private final DependantRepository dependantRepository;
 
     @GetMapping
-    public ResponseEntity<Page<Dependant>> findAllDependents(Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(dependantRepository.findAll(pageable));
+    public ResponseEntity<Iterable<Dependant>> findAllDependents(){
+        return ResponseEntity.status(HttpStatus.OK).body(dependantRepository.findAll());
     }
 
     @PostMapping

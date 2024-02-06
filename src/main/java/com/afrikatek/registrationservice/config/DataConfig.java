@@ -1,9 +1,9 @@
 package com.afrikatek.registrationservice.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing;
 
 @Configuration
-@EnableJpaAuditing
+@EnableJdbcAuditing
 public class DataConfig {
 }

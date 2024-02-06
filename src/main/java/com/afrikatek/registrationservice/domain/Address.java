@@ -1,53 +1,39 @@
 package com.afrikatek.registrationservice.domain;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.Version;
+
+import java.time.Instant;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "addresses")
 public class Address {
-        @Id
-        Long id;
-        @NotBlank(message = "Street address can not be null.")
-        String streetAddress;
-        String streetAddressOne;
-        @NotBlank(message = "City can not be blank.")
-        String city;
-        @NotBlank(message = "Province can not be blank.")
-        String province;
-        @NotBlank(message = "ZipCode can not be blank.")
-        String zipCode;
-        @NotBlank(message = "Country can not be blank.")
-        String country;
-        @Version
-        int version;
-        public static Address of(
-                String streetAddress,
-                String streetAddressOne,
-                String city,
-                String province,
-                String zipCode,
-                String country) {
-                return new Address(
-                        null,
-                        streetAddress,
-                        streetAddressOne,
-                        city,
-                        province,
-                        zipCode,
-                        country,
-                        0);
-        }
+    @NotBlank(message = "Street address must be defined.")
+    String streetAddress;
+    String streetAddressOne;
+    @NotBlank(message = "City must be defined.")
+    String city;
+    @NotBlank(message = "Province must be defined.")
+    String province;
+    String zipCode;
+    @NotBlank(message = "Country must be defined.")
+    String country;
+    @CreatedDate
+    Instant createdDate;
+    @LastModifiedDate
+    Instant lastModifiedDate;
+    @Version
+    int version;
+    @Transient
+    Congregant congregant;
 }
