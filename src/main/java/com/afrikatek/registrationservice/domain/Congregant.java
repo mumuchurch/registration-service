@@ -30,20 +30,20 @@ public class Congregant {
     @NotBlank(message = "Title should be defined.")
     @Size(max = 15)
     private String title;
-    @NotNull(message = "First names should be defined.")
+    @NotBlank(message = "First names should be defined.")
     @Size(max = 50)
     private String firstNames;
-    @NotNull(message = "Surname should be defined.")
+    @NotBlank(message = "Surname should be defined.")
     @Size(max = 50, message = "Surname can not contain more than 50 characters.")
     private String surname;
-    @NotNull(message = "Email should be defined.")
+    @NotBlank(message = "Email should be defined.")
     @Size(max = 100)
-    @Pattern(regexp = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$/")
+    //@Pattern(regexp = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$/")
     private String email;
     @NotNull
     private LocalDate dob;
     private Gender gender;
-    @Size(max = 100)
+    @Size(max = 100, message = "Profession can not be more than 100 characters.")
     private String profession;
     @CreatedDate
     private Instant createdDate;
