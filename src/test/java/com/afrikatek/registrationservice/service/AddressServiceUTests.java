@@ -4,8 +4,10 @@ import com.afrikatek.registrationservice.config.DataConfig;
 import com.afrikatek.registrationservice.domain.Address;
 import com.afrikatek.registrationservice.domain.Congregant;
 import com.afrikatek.registrationservice.domain.enumeration.Gender;
+import com.afrikatek.registrationservice.dto.AddressDTO;
 import com.afrikatek.registrationservice.repository.CongregantRepository;
 import com.afrikatek.registrationservice.service.impl.AddressServiceImpl;
+import com.afrikatek.registrationservice.service.impl.CongregantServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,12 @@ class AddressServiceUTests {
     @Autowired
     private CongregantRepository congregantRepository;
 
+    private CongregantServiceImpl congregantService;
+
     @BeforeEach
     void setup() {
-        addressService = new AddressServiceImpl(congregantRepository);
+        congregantService = new CongregantServiceImpl(congregantRepository);
+        addressService = new AddressServiceImpl(congregantService, congregantRepository);
     }
     @Test
     void whenAddressAddThenSucceed(){
@@ -45,15 +50,7 @@ class AddressServiceUTests {
                 .dob(LocalDate.of(1984, 11, 8))
                 .build();
         Congregant saved = congregantRepository.save(congregant);
-        Address address = Address.builder()
-                .streetAddress("169 Silver Stream South")
-                .streetAddressOne("Halfway Gardens")
-                .city("Midrand")
-                .province("Gauteng")
-                .country("South Africa")
-                .zipCode("1689")
-                .createdDate(Instant.now())
-                .build();
+        AddressDTO address = new AddressDTO("169 Silver Stream South", "Halfway Gardens", "Midrand", "Gauteng", "Gauteng", "South Africa");
         Address addAddress = addressService.addAddress(address, saved.getId());
         assertThat(addAddress).isNotNull();
     }

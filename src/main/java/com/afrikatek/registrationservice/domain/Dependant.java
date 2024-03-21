@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "dependants")
+@Table(name = "dependant")
 public class Dependant {
         @Id
         private Long id;

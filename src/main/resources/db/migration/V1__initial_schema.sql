@@ -17,6 +17,7 @@ CREATE TABLE CONGREGANT
 CREATE TABLE ADDRESS
 (
     id BIGSERIAL NOT NULL,
+    guid varchar(100) not null,
     congregant         BIGINT,
     city               VARCHAR(255),
     country            VARCHAR(255),
@@ -40,7 +41,6 @@ CREATE TABLE BAPTISM_HISTORY
     parish_baptised_at  VARCHAR(255) NOT NULL,
     parish_confirmed_at VARCHAR(255) NOT NULL,
     parish_name         VARCHAR(255) NOT NULL,
-    created_date        TIMESTAMP    NOT NULL,
     last_modified_date  TIMESTAMP,
     primary key (id),
     congregant          BIGINT UNIQUE,
@@ -54,7 +54,7 @@ CREATE TABLE DEPENDANT
     full_names         VARCHAR(255),
     gender             VARCHAR(255) CHECK (gender IN ('MALE', 'FEMALE', 'NOT_STATED')),
     created_date       TIMESTAMP NOT NULL,
-    last_modified_date TIMESTAMP,
+    last_modified_date TIMESTAMP NOT NULL,
     version            INT8      NOT NULL,
     congregant         BIGINT,
     PRIMARY KEY (id),
@@ -67,7 +67,7 @@ CREATE TABLE MARRIAGE_HISTORY
     marriage_date      DATE         NOT NULL,
     parish_married_at  VARCHAR(255) NOT NULL,
     spouse_full_names  VARCHAR(255) NOT NULL,
-    created_date       TIMESTAMP    NOT NULL,
+    created_date       TIMESTAMP NOT NULL,
     last_modified_date TIMESTAMP,
     primary key (id),
     version            INT8         NOT NULL,

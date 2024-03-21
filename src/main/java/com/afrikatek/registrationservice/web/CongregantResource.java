@@ -1,6 +1,8 @@
 package com.afrikatek.registrationservice.web;
 
+import com.afrikatek.registrationservice.domain.Address;
 import com.afrikatek.registrationservice.domain.Congregant;
+import com.afrikatek.registrationservice.dto.AddressDTO;
 import com.afrikatek.registrationservice.dto.CongregantDTO;
 import com.afrikatek.registrationservice.service.AddressService;
 import com.afrikatek.registrationservice.service.CongregantService;
@@ -49,5 +51,29 @@ public class CongregantResource {
    public ResponseEntity<Congregant> deleteCongregantById(@PathVariable Long congregantId) {
       congregantService.deleteById(congregantId);
       return ResponseEntity.noContent().build();
+   }
+
+   @PostMapping("/{congregantId}/addresses")
+   public ResponseEntity<Address> addAddress(@PathVariable Long congregantId, @RequestBody AddressDTO addressDTO) {
+      Address address = congregantService.addAddress(congregantId, addressDTO);
+      if (address == null) {
+         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+      }
+      return ResponseEntity.status(HttpStatus.OK).body(address);
+   }
+
+   @PutMapping("/{congregantId}/addresses")
+   public ResponseEntity<Address> updateAddress(@PathVariable Long congregantId, @RequestBody AddressDTO addressDTO) {
+      Address address = congregantService.updateAddress(congregantId, addressDTO);
+      if (address == null) {
+         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+      }
+      return ResponseEntity.status(HttpStatus.OK).body(address);
+   }
+
+   @DeleteMapping("/{congregantId}/addresses")
+   public ResponseEntity<Congregant> deleteAddress(@PathVariable Long congregantId, @RequestBody AddressDTO addressDTO) {
+      congregantService.removeAddress(congregantId, addressDTO);
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
    }
 }

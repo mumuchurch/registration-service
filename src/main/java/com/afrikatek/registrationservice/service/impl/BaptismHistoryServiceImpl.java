@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class BaptismHistoryServiceImpl implements BaptismHistoryService {
     private final CongregantRepository congregantRepository;
+
     @Override
     public BaptismHistory addBaptismHistory(BaptismHistory baptismHistory, Long congregantId) {
         Congregant congregant = congregantRepository
@@ -24,6 +25,7 @@ public class BaptismHistoryServiceImpl implements BaptismHistoryService {
 
     @Override
     public BaptismHistory updateBaptismHistory(BaptismHistory baptismHistory, Long congregantId) {
+
         Congregant congregant = congregantRepository
                 .findById(congregantId)
                 .orElseThrow(() -> new EntityNotFoundException(congregantId, "Congregant"));
@@ -37,8 +39,6 @@ public class BaptismHistoryServiceImpl implements BaptismHistoryService {
         Congregant congregant = congregantRepository
                 .findById(congregantId)
                 .orElseThrow(() -> new EntityNotFoundException(congregantId, "Congregant"));
-        BaptismHistory baptismHistory = congregant.getBaptismHistory();
-        baptismHistory.setCongregant(null);
         congregant.setBaptismHistory(null);
         congregantRepository.save(congregant);
     }

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.Version;
@@ -18,22 +17,23 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class Address {
+    private String guid;
     @NotBlank(message = "Street address must be defined.")
-    String streetAddress;
-    String streetAddressOne;
+    private String streetAddress;
+    private String streetAddressOne;
     @NotBlank(message = "City must be defined.")
-    String city;
+    private String city;
     @NotBlank(message = "Province must be defined.")
-    String province;
-    String zipCode;
+    private String province;
+    private String zipCode;
     @NotBlank(message = "Country must be defined.")
-    String country;
+    private String country;
     @CreatedDate
-    Instant createdDate;
+    private Instant createdDate;
     @LastModifiedDate
-    Instant lastModifiedDate;
+    private Instant lastModifiedDate;
     @Version
-    int version;
+    private int version;
     @Transient
-    Congregant congregant;
+    private Congregant congregant;
 }

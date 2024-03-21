@@ -1,7 +1,6 @@
 package com.afrikatek.registrationservice.dto;
 
 import com.afrikatek.registrationservice.domain.enumeration.Gender;
-import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 

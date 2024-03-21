@@ -1,11 +1,9 @@
 package com.afrikatek.registrationservice.web;
 
 import com.afrikatek.registrationservice.domain.Dependant;
-import com.afrikatek.registrationservice.repository.DependantRepository;
+import com.afrikatek.registrationservice.dto.DependantDTO;
+import com.afrikatek.registrationservice.service.DependantService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,26 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/api/v1.0/dependants")
 public class DependantResource {
-    private final DependantRepository dependantRepository;
+    private final DependantService dependantService;
 
     @GetMapping
     public ResponseEntity<Iterable<Dependant>> findAllDependents(){
-        return ResponseEntity.status(HttpStatus.OK).body(dependantRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(dependantService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<Dependant> createDependant(@RequestBody Dependant dependant){
-        return ResponseEntity.status(HttpStatus.CREATED).body(dependantRepository.save(dependant));
+    public ResponseEntity<Dependant> createDependant(@RequestBody DependantDTO dependantDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(dependantService.create(dependantDTO));
     }
 
-    @PutMapping
-    public ResponseEntity<Dependant> updateDependant(@RequestBody Dependant dependant){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dependantRepository.save(dependant));
+    @PutMapping("/{id}")
+    public ResponseEntity<Dependant> updateDependant(@RequestBody DependantDTO dependantDTO, @PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dependantService.update(dependantDTO, id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDependant(@PathVariable Long id){
-        dependantRepository.deleteById(id);
+        dependantService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
