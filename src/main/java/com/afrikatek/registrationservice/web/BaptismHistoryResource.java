@@ -1,14 +1,12 @@
 package com.afrikatek.registrationservice.web;
 
 import com.afrikatek.registrationservice.domain.BaptismHistory;
-import com.afrikatek.registrationservice.repository.BaptismHistoryRepository;
 import com.afrikatek.registrationservice.service.BaptismHistoryService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,38 +14,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
+@Slf4j
 @RestController
-@RequestMapping("/api/v1.0/baptism-histories")
 @AllArgsConstructor
+@RequestMapping("/api/v1.0/baptism-history")
 public class BaptismHistoryResource {
-    private final BaptismHistoryRepository baptismHistoryRepository;
     private final BaptismHistoryService baptismHistoryService;
 
-    @GetMapping
-    public ResponseEntity<Iterable<BaptismHistory>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(baptismHistoryService.findAll());
+    @PostMapping("/{congregantId}")
+    public ResponseEntity<BaptismHistory> createBaptismHistory(@RequestBody BaptismHistory baptismHistory, @PathVariable Long congregantId) {
+        log.debug("Request to add baptism history {} for congregant with id {}", baptismHistory, congregantId);
+        BaptismHistory addedBaptismHistory = baptismHistoryService.addBaptismHistory(baptismHistory, congregantId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedBaptismHistory);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BaptismHistory> getBaptismHistory(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(baptismHistoryService.findBaptismHistory(id));
+    @PutMapping("/{congregantId}")
+    public ResponseEntity<BaptismHistory> updateBaptismHistory(@RequestBody BaptismHistory baptismHistory, @PathVariable Long congregantId) {
+        log.debug("Request to update baptism history {} for congregant with id {}", baptismHistory, congregantId);
+        BaptismHistory updatedBaptismHistory = baptismHistoryService.updateBaptismHistory(baptismHistory, congregantId);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedBaptismHistory);
     }
 
-    @PostMapping
-    public ResponseEntity<BaptismHistory> createBaptismHistory(@RequestBody BaptismHistory baptismHistory){
-        return ResponseEntity.status(HttpStatus.CREATED).body(baptismHistoryService.createBaptismHistory(baptismHistory));
-    }
-
-    @PutMapping
-    public ResponseEntity<BaptismHistory> updateBaptismHistory(@RequestBody BaptismHistory baptismHistory){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(baptismHistoryService.updateBaptismHistory(baptismHistory));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBaptismHistory(@PathVariable Long id){
-        baptismHistoryRepository.deleteById(id);
+    @DeleteMapping("/{congregantId}")
+    public ResponseEntity<Void> deleteBaptismHistory(@PathVariable Long congregantId) {
+        log.debug("Request to delete baptism history for congregant with id {}", congregantId);
+        baptismHistoryService.deleteBaptismHistory(congregantId);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,35 +1,40 @@
 package com.afrikatek.registrationservice.domain;
 
 import com.afrikatek.registrationservice.domain.enumeration.Gender;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "dependants")
+@Table(name = "dependant")
 public class Dependant {
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Id
         private Long id;
         @NotBlank(message = "Full names can not be blank.")
         private String fullNames;
         @NotNull(message = "Date of birth can not be null.")
         private LocalDate dateOfBirth;
-        @Enumerated(EnumType.STRING)
         private Gender gender;
+        @CreatedDate
+        private Instant createdDate;
+        @LastModifiedDate
+        private Instant lastModifiedDate;
+        @Version
+        private int version;
+        private AggregateReference<Congregant, Long> congregant;
 }
